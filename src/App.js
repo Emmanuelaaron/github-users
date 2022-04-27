@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import store from './redux/ConfigureStore';
 import './App.css';
 import SignUpUser from './components/SignUp';
+import Login from './components/Login';
 
 function App() {
   return (
@@ -12,7 +13,7 @@ function App() {
       <Provider store={store}>
         <Routes>
           <Route path="/signup" element={<SignUpUser />} />
-          <Route path="/" element={<h1>login</h1>} />
+          <Route path="/" element={<Login />} />
         </Routes>
       </Provider>
     </Router>
