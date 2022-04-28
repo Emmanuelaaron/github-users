@@ -2,6 +2,6 @@ import UserForm from './UserForm';
 import { SignUp } from '../redux/session/Session';
 
 const SignUpUser = () => (
-  <UserForm action="SignUp" userActionMethod={SignUp} />
+  <UserForm action="Signup" userActionMethod={SignUp} myAction="Login" myLink="/" />
 );
 export default SignUpUser;

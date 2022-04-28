@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Nav } from 'react-bootstrap';
 
 const UserForm = (props) => {
-  const { action, userActionMethod } = props;
+  const {
+    action, userActionMethod, myAction, myLink,
+  } = props;
 
   const [userInput, setUserIput] = useState({
     username: '',
@@ -14,6 +16,7 @@ const UserForm = (props) => {
 
   const dispatch = useDispatch();
   const userAction = bindActionCreators(userActionMethod, dispatch);
+  const errors = useSelector((state) => state.session.errors);
 
   const signUserHandler = () => {
     userAction(userInput);
@@ -38,10 +41,18 @@ const UserForm = (props) => {
     }));
   };
   return (
-    <div className="d-flex align-items-center justify-content-center bg-info mt-5 pt-5">
+    <div className="d-flex flex-column align-items-center justify-content-center mt-5 pt-5 ">
+      <h1>
+        {action}
+        {' '}
+        here Please
+      </h1>
       <Form className="w-50" onSubmit={(e) => e.preventDefault()}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Username</Form.Label>
+          <div className="d-flex flex-column">
+            <Form.Label>Username</Form.Label>
+            <Form.Label className="text-danger">{errors[0]}</Form.Label>
+          </div>
           <Form.Control type="text" placeholder="Enter username" value={userInput.username} onChange={setUserName} />
         </Form.Group>
 
@@ -49,9 +60,12 @@ const UserForm = (props) => {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Password" value={userInput.password} onChange={setPassword} />
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={signUserHandler}>
-          {action}
-        </Button>
+        <div className="d-flex justify-content-between">
+          <Button variant="primary" type="submit" onClick={signUserHandler}>
+            {action}
+          </Button>
+          <Nav.Link href={myLink}>{myAction}</Nav.Link>
+        </div>
       </Form>
     </div>
   );
@@ -60,6 +74,8 @@ const UserForm = (props) => {
 UserForm.propTypes = {
   action: PropTypes.string.isRequired,
   userActionMethod: PropTypes.func.isRequired,
+  myAction: PropTypes.string.isRequired,
+  myLink: PropTypes.string.isRequired,
 };
 
 export default UserForm;

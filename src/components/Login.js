@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Form, Button, Card } from 'react-bootstrap';
+import {
+  Form, Button, Card,
+  Navbar, Nav,
+  Container,
+} from 'react-bootstrap';
 import UserForm from './UserForm';
-import { LoginUser } from '../redux/session/Session';
+import { LoginUser, logoutUser } from '../redux/session/Session';
 import { fetchGithubUsers } from '../redux/github/Github';
 
 const Login = () => {
@@ -14,6 +18,7 @@ const Login = () => {
 
   const disptach = useDispatch();
   const loadGithubUsersAction = bindActionCreators(fetchGithubUsers, disptach);
+  const logOff = bindActionCreators(logoutUser, disptach);
   const users = useSelector((state) => state.users);
 
   const setProgramingLanguage = (e) => {
@@ -28,11 +33,27 @@ const Login = () => {
       lang: '',
     }));
   };
+
+  const logOut = () => {
+    logOff();
+  };
+
   return (
     (!currentState.session)
-      ? <UserForm action="Login" userActionMethod={LoginUser} />
+      ? <UserForm action="Login" userActionMethod={LoginUser} myAction="SignUP" myLink="/signup" />
       : (
-        <div className="d-flex flex-column align-items-center pt-5 mb-4">
+        <div className="d-flex flex-column align-items-center pt- mb-4">
+          <Navbar className="bg-light w-100 mb-5">
+            <Container>
+              <Navbar.Brand href="#">
+                Top Github users by Language
+              </Navbar.Brand>
+              <Navbar.Toggle />
+              <Navbar.Collapse className="justify-content-end">
+                <Nav.Link className="text-dark" onClick={logOut}>Logout</Nav.Link>
+              </Navbar.Collapse>
+            </Container>
+          </Navbar>
           <Form className="w-50" onSubmit={(e) => e.preventDefault()}>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Search users by Language</Form.Label>

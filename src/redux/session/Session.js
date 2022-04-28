@@ -1,5 +1,8 @@
 const NEW_USER = 'GITHUB/NEW_USER';
 const LOGIN_USER = 'GITHUB/LOGIN_USER';
+const LOGIN_USER_ERRORS = 'GITHUB/LOGIN_USER_ERRORS';
+const LOGOUT_USER = 'GITHUB/LOGOUT_USER';
+
 const ERRORS = 'GITHUB/ERRORS';
 
 const initialState = {
@@ -18,8 +21,18 @@ const loginUser = (payload) => ({
   payload,
 });
 
+export const logoutUser = (payload) => ({
+  type: LOGOUT_USER,
+  payload,
+});
+
 const errors = (payload) => ({
   type: ERRORS,
+  payload,
+});
+
+const loginUserErrors = (payload) => ({
+  type: LOGIN_USER_ERRORS,
   payload,
 });
 
@@ -50,8 +63,7 @@ export const LoginUser = (credentials) => async (dispatch) => {
       if (data.code === 200) {
         dispatch(loginUser(data));
       } else {
-        console.log('ghdgdh', data);
-        // dispatch(errors(data));
+        dispatch(loginUserErrors(data));
       }
     });
 };
@@ -68,18 +80,26 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         message: action.payload.message,
+        errors: [],
         session: true,
       };
 
     case LOGIN_USER:
       saveSessionLocally(action.payload.token);
-      console.log('iiiiiiiiiiiiiiiiiiiiiii', action.payload.token, 'llllllllll');
       return {
         ...state,
         message: action.payload.message,
         session: true,
       };
-
+    case LOGIN_USER_ERRORS: {
+      const errors = [];
+      errors.push(action.payload.message);
+      return {
+        ...state,
+        message: '',
+        errors,
+      };
+    }
     case (ERRORS): {
       const errors = [];
       Object.entries(action.payload).forEach((error) => {
@@ -90,6 +110,14 @@ export const reducer = (state = initialState, action) => {
         message: '',
         errors,
       }; }
+    case LOGOUT_USER:
+      sessionStorage.removeItem('userSession');
+      return {
+        ...state,
+        message: '',
+        errors: [],
+        session: false,
+      };
     default:
       return state;
   }
