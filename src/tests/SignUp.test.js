@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import store from '../redux/ConfigureStore';
 import SignUpUser from '../components/SignUp';
 
-describe('Login Component', () => {
-  describe('use jest snapshot to test login component', () => {
-    it('render Login compenent as expected', async () => {
+describe('Signup Component', () => {
+  describe('use jest snapshot to test signup component', () => {
+    it('render Signup compenent as expected', async () => {
       const signUpCompenent = render(
         <Provider store={store}>
           <SignUpUser />

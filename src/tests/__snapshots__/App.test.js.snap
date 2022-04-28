@@ -1,16 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-<<<<<<< HEAD
-exports[`Login Component use jest snapshot to test login component render Login compenent as expected 1`] = `
-=======
-exports[`Signup Component use jest snapshot to test signup component render Signup compenent as expected 1`] = `
->>>>>>> 56857eb (adds tests)
+exports[`Login Component use jest snapshot to test main App render main app component as expected 1`] = `
 <DocumentFragment>
   <div
     class="d-flex flex-column align-items-center justify-content-center mt-5 pt-5 "
   >
     <h1>
-      Signup here Please
+      Login here Please
     </h1>
     <form
       class="w-50"
@@ -64,13 +60,13 @@ exports[`Signup Component use jest snapshot to test signup component render Sign
           class="btn btn-primary"
           type="submit"
         >
-          Signup
+          Login
         </button>
         <a
           class="nav-link"
-          href="/"
+          href="/signup"
         >
-          Login
+          SignUP
         </a>
       </div>
     </form>
