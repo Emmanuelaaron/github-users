@@ -38,7 +38,7 @@ const UserForm = (props) => {
     }));
   };
   return (
-    <div className="d-flex align-items-center justify-content-center">
+    <div className="d-flex align-items-center justify-content-center bg-info mt-5 pt-5">
       <Form className="w-50" onSubmit={(e) => e.preventDefault()}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username</Form.Label>

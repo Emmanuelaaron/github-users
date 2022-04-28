@@ -34,7 +34,6 @@ export const SignUp = (credentials) => async (dispatch) => {
       if (data.code === 201) {
         dispatch(newUser(data));
       } else {
-        console.log('ghdgdh', data);
         dispatch(errors(data));
       }
     });
@@ -58,14 +57,13 @@ export const LoginUser = (credentials) => async (dispatch) => {
 };
 
 const saveSessionLocally = (data) => {
-  sessionStorage.setItem('userSession', JSON.stringify({ token: data.token }));
+  sessionStorage.setItem('userSession', JSON.stringify({ token: data }));
 };
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
     case NEW_USER:
       saveSessionLocally(action.payload.token);
-      console.log(action.payload);
 
       return {
         ...state,
@@ -75,8 +73,7 @@ export const reducer = (state = initialState, action) => {
 
     case LOGIN_USER:
       saveSessionLocally(action.payload.token);
-      console.log(action.payload.message);
-
+      console.log('iiiiiiiiiiiiiiiiiiiiiii', action.payload.token, 'llllllllll');
       return {
         ...state,
         message: action.payload.message,
